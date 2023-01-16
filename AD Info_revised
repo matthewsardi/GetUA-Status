@@ -1,0 +1,17 @@
+Import-Module activedirectory
+
+$ResultList = Get-Content -Path \\Documents\termedaccounts.txt | ForEach-Object {
+    Get-ADUser -LDAPFilter "(anr=$_)" | Select-Object -Property samaccountname,name,userprincipalname,enabled
+}
+
+
+#write-host $ResultList
+$ResultList | Export-Csv -Path \\Documents\Results.csv -NoTypeInformation 
+
+#foreach($user in $gpADusers){
+ #   $splitUsers = $user.Split(',')
+  #  $ADUsers = $splitUsers.trimStart().trimEnd()
+   # foreach($id in $ADUsers){
+    #    get-aduser -Identity $id | select name,samaccountname
+    #}
+#}
